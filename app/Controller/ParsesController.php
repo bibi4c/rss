@@ -19,8 +19,12 @@ class ParsesController extends AppController {
             'conditions' => array('RssLink.deleted' => 0),
             'fields' => array('RssLink.link', 'RssLink.rss_tag_id')
         ));
+        $url_test = 'http://localhost:8080/datn/services/api/people.getList/1/10';
+        $array_tests = file_get_contents($url_test);
+        debug($array_tests);
         foreach ($url_array as $url) {
             $rss_tag_id = $url['RssLink']['rss_tag_id'];
+            
             $rss_link = $url['RssLink']['link'];
             $parsed_xml = Xml::build($rss_link);
             $this->rss_item = Xml::toArray($parsed_xml);
@@ -34,8 +38,8 @@ class ParsesController extends AppController {
                     $tmp['LinkParse']['link'] = $item['link'];
                     $tmp['LinkParse']['rss_tag_id'] = $rss_tag_id;
                     $tmp['LinkParse']['create_time'] = date('Y-m-d H:i:s');
-                    if ($this->LinkParse->saveAll($tmp)){
-                    }
+                  //  if ($this->LinkParse->saveAll($tmp)){
+                    //}
                      
                 }
             }
